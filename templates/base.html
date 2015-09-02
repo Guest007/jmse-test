@@ -1,0 +1,86 @@
+{% load static from staticfiles %}
+{% load thumbnail %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test for www.jm.se</title>
+
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+</head>
+<body>
+<div class="container">
+{#<div class="row">#}
+{#{{ object_list|length }}#}
+{#</div>#}
+
+{% if is_paginated %}
+    <div class="pagination">
+        <span class="page-links">
+            {% if page_obj.has_previous %}
+                <a href="/?page={{ page_obj.previous_page_number }}" class="btn btn-default">previous</a>
+            {% endif %}
+            <span class="page-current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+            {% if page_obj.has_next %}
+                <a href="/?page={{ page_obj.next_page_number }}" class="btn btn-default">next</a>
+            {% endif %}
+        </span>
+    </div>
+{% endif %}
+
+<hr>
+<div class="row">
+{% for estate in object_list %}
+
+<div class="col-md-4">
+  <a href="{{ estate.url }}">
+  {% thumbnail estate.image "300" crop="center" as im %}
+    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+  {% endthumbnail %}
+  </a>
+<p><strong>Name:</strong> {{ estate.title }}</p>
+<p><strong>Status:</strong> {{ estate.status }}</p>
+<p><strong>Area:</strong> {{ estate.area }}</p>
+</div>
+
+{% if forloop.counter|divisibleby:3 %}
+  </div><hr>
+  <div class="row">
+{% endif %}
+
+{% empty %}
+  <h1>Estate Objects not imported</h1>
+{% endfor %}
+
+
+  </div>
+
+<div class="row">
+  {% if is_paginated %}
+    <div class="pagination">
+        <span class="page-links">
+            {% if page_obj.has_previous %}
+                <a href="/?page={{ page_obj.previous_page_number }}" class="btn btn-default">previous</a>
+            {% endif %}
+            <span class="page-current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+            {% if page_obj.has_next %}
+                <a href="/?page={{ page_obj.next_page_number }}" class="btn btn-default">next</a>
+            {% endif %}
+        </span>
+    </div>
+{% endif %}
+</div>
+
+</div>
+
+</body>
+</html>
