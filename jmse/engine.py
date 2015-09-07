@@ -29,7 +29,7 @@ def get_jm_json(**options):
     count_obj = j['HitCountObjects']
     pages = count_obj / obj_per_page
     obj_last_page = count_obj % obj_per_page
-    pages  = pages + 1 if obj_last_page else 0
+    pages = pages + 1 if obj_last_page else 0
 
     for p in range(pages):
         params['p'] = p + 1
@@ -50,7 +50,7 @@ def get_jm_json(**options):
         # Check and change status for existing objects
         try:
             obj = result.pop(est.pageid)
-            if est.status != obj[1]:
+            if est.status and est.status != obj[1]:
                 est.status = obj[1]
                 est.save()
         except KeyError:

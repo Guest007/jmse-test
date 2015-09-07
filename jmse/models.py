@@ -12,9 +12,9 @@ def get_file_name(instance, filename):
 
 class Estate(models.Model):
     pageid = models.IntegerField(u'PageId')
-    title = models.CharField(u'ProjectName', max_length=500)
-    status = models.CharField(u'Status', max_length=50)
-    area = models.CharField(u'Area', max_length=100)
+    title = models.CharField(u'ProjectName', max_length=500, blank=True, null=True)
+    status = models.CharField(u'Status', max_length=50, blank=True, null=True)
+    area = models.CharField(u'Area', max_length=100, blank=True, null=True)
     url = models.URLField(u'URL')
     image = ImageField(u'Image', upload_to=get_file_name)
     is_publish = models.BooleanField(u'IsPublish', default=True)
